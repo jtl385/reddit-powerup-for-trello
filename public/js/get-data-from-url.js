@@ -5,8 +5,14 @@ module.exports = (t, url) => {
   xhr.responseType = 'json';
   xhr.onload = () => {
     if (Array.isArray(xhr.response)){
-      data = xhr.response[0];
-      return data;
+      try{ 
+        data = xhr.response[0].data.children[0].data;
+        return data;
+        }
+      catch(err){
+        console.log("Error getting json data");
+        console.error(err);
+      }
     }
     else {
       console.log("Response was not an array");

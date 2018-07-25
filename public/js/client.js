@@ -34,19 +34,20 @@ TrelloPowerUp.initialize({
     return Promise.try(() => {
       return getDataFromUrl(dataUrl);
     })
-    .then(
-    
-    );
-
-    return {
-      url: options.url,
-      title: redditTitle,
-      image: {
-        url: imageUrl,
-        logo: false,
-      },
-      
-    };
+    .then((data) => {
+      redditTitle = data.title;
+      imageUrl = data.thumbnail;
+    })
+    .then(() => {
+      return {
+        url: options.url,
+        title: redditTitle,
+        image: {
+          url: imageUrl,
+          logo: false,
+        },
+      };
+    });
   },
   
 });
