@@ -13,6 +13,10 @@ const cardButtonCallback = (t) => {
   });
 };
 
+const isRedditLink = (url) => {
+  
+}
+
 TrelloPowerUp.initialize({
   'card-buttons': (t, options) => {
     return [{
