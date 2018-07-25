@@ -25,7 +25,13 @@ TrelloPowerUp.initialize({
   },
   
   'attachment-thumbnail': (t, options) => {
+    let redditTitle;
     
+    return {
+      url: options.url,
+      title: redditTitle,
+      
+    };
   },
   
 });
