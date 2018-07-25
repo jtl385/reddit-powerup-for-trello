@@ -1,5 +1,7 @@
 /* global TrelloPowerUp */
 
+const getDataFromUrl = require('./get-data-from-url.js');
+
 var Promise = TrelloPowerUp.Promise;
 
 const REDDIT_ICON = 'https://png.icons8.com/metro/1600/reddit.png';
@@ -25,7 +27,12 @@ TrelloPowerUp.initialize({
   },
   
   'attachment-thumbnail': (t, options) => {
-    let redditTitle, imageUrl;
+    let data, redditTitle, imageUrl, dataUrl;
+    
+    dataUrl = options.url + '/.json';
+    
+    return getDataFromUrl(dataUrl)
+      .then(
     
     return {
       url: options.url,
