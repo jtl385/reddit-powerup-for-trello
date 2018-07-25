@@ -7,8 +7,13 @@ module.exports = (t, url) => {
     xhr.open('GET', url);
     xhr.responseType = 'json';
     xhr.onload = () => {
-      data = xhr.response[0];
-      return data;
+      if (Array.isArray(xhr.response)){
+        data = xhr.response[0];
+        return data;
+      }
+      else {
+        console.log("Response was not an array");
+      }
     };
     xhr.send()
   });
