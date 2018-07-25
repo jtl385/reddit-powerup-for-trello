@@ -14,6 +14,7 @@ const cardButtonCallback = (t) => {
 };
 
 const isRedditLink = (url) => {
+  let regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
   
 }
 
