@@ -19,6 +19,13 @@ TrelloPowerUp.initialize({
       'callback': cardButtonCallback,
     }];
   },
-  'attachment
+  
+  'attachment-sections': (t, options) => {
+    
+  },
+  
+  'attachment-thumbnail': (t, options) => {
+    
+  },
   
 });
