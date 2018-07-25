@@ -2,15 +2,23 @@
 
 var Promise = TrelloPowerUp.Promise;
 
-var REDDIT_ICON = 'https://png.icons8.com/metro/1600/reddit.png';
+const REDDIT_ICON = 'https://png.icons8.com/metro/1600/reddit.png';
+
+const cardButtonCallback = (t) => {
+  return t.popup({
+    'title': 'Reddit',
+    'url': 'reddit.html',
+  });
+};
 
 TrelloPowerUp.initialize({
-  'card-buttons': function(t, options){
+  'card-buttons': (t, options) => {
     return [{
       'icon': REDDIT_ICON,
       'text': 'Reddit',
-      'callback': 
-    }]
+      'callback': cardButtonCallback,
+    }];
   },
+  'attachment
   
 });
