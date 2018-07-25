@@ -8,7 +8,8 @@ TrelloPowerUp.initialize({
   'card-buttons': function(t, options){
     return [{
       'icon': REDDIT_ICON,
-      
+      'text': 'Reddit',
+      'callback': 
     }]
   },
   
