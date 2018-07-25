@@ -31,9 +31,13 @@ TrelloPowerUp.initialize({
     
     dataUrl = options.url + '/.json';
     
-    return getDataFromUrl(dataUrl)
-      .then(
+    return Promise.try(() => {
+      return getDataFromUrl(dataUrl);
+    })
+    .then(
     
+    );
+
     return {
       url: options.url,
       title: redditTitle,
