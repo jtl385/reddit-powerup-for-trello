@@ -19,7 +19,7 @@ const isRedditLink = (url) => {
 const getDataFromUrl = (t, url) => {
   var xhr = new XMLHttpRequest();
   var data = {};
-  xhr.open('GET', url);
+  xhr.open('GET', url, true);
   xhr.responseType = 'json';
   xhr.onload = () => {
     console.log("xhr response: " + xhr.response);
@@ -38,6 +38,14 @@ const getDataFromUrl = (t, url) => {
   };
   xhr.send()
 };
+
+const getDataFromUrl2 = (t, url) => {
+  $.getJSON(url, (response) => {
+    console.log("response: " + response);
+    return response;
+  });
+}
+
 
 TrelloPowerUp.initialize({
   'card-buttons': (t, options) => {
@@ -61,7 +69,7 @@ TrelloPowerUp.initialize({
     dataUrl = options.url + '/.json';
     
     return Promise.try(() => {
-      data = getDataFromUrl(dataUrl);
+      data = getDataFromUrl2(dataUrl);
       return data;
     })
     .then((data) => {
