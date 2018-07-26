@@ -51,7 +51,8 @@ TrelloPowerUp.initialize({
     
     if (redditAttachments.length > 0) {
       return [{
-       claimed: redditAttachments, 
+        claimed: redditAttachments, 
+        
       }];
     }
     return [];
