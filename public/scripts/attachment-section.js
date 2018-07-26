@@ -5,7 +5,7 @@ const Promise = TrelloPowerUp.Promise;
 const linkTemplate = 
 `
 <div class="link">
-  <div class="link-icon"></div>
+  <div class="link-icon" background={{icon}}></div>
   <div class="link-details">
     <span class="link-details-title">{{title}}</div>
     <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
@@ -25,7 +25,7 @@ const getDataFromUrl = (url) => {
     $.getJSON(url, (response) => {
       let data;
       if (Array.isArray(response)){ //it's a post
-        data = response[0].data;
+        data = response[0].data.children[0].data;
         data.typeOfLink = 'post';
         console.log('in getDataFromUrl');
         console.log(data);
@@ -56,12 +56,17 @@ t.render(() => {
         return getDataFromUrl(dataUrl);
       })
       .then((data) => {
-        let renderData = {};    
-        if (data.typeOfLink === 'post')
-          data.children[0].
-          renderData.subtitle = '';
-        else if (data.typeOfLink === 'subreddit')
-          renderData.subtitle = '';
+        let renderData = {
+          title: data.title,
+        };    
+        if (data.typeOfLink === 'post'){
+          renderData.subtitle = data.selftext.substring(0, 32);
+          if (data.thumbnail !== 'self')
+            renderData.icon = data.thumbnail
+        }
+        else if (data.typeOfLink === 'subreddit'){
+          renderData.subtitle = data.public_description.substring(0, 32);
+        }
         else
           throw new Error('Type of link was not post or subreddit');
         
