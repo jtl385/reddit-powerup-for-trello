@@ -11,13 +11,37 @@ const isRedditLink = (url) => {
   return regex.test(url);
 }
 
+const getDataFromUrl = (t, url) => {
+  return new Promise((resolve, reject) => {
+    $.getJSON(url, (response) => {
+      let data;
+      if (Array.isArray(response)){ //it's a post
+        data = response[0].data;
+        data.typeOfLink = 'post';
+        return resolve(data);
+      }
+      else if (typeof response === 'object'){ //it's a subreddit
+        data = response.data;
+        data.typeOfLink('subreddit');
+        return resolve(data);
+      }
+      else{
+        return reject("Response was not valid");
+      }
+    });
+  });
+}
+
 t.render(() => {
   t.card('attachments').get('attachments').filter((a) => {
     return isRedditLink(a.url);
   })
   .then((attachments) => {
     attachments.forEach((a) => {
-      console.log(a.url);
+      let dataUrl = a.url + '.json';
+      Promise.try(() => {
+        return getDataFromUrl(dataUrl);
+      });
     });
   })
   .then()

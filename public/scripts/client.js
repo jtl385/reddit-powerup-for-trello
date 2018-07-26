@@ -16,26 +16,6 @@ const isRedditLink = (url) => {
   return regex.test(url);
 }
 
-const getDataFromUrl = (t, url) => {
-  return new Promise((resolve, reject) => {
-    $.getJSON(url, (response) => {
-      let data;
-      if (Array.isArray(response)){ //its a post
-        data = response[0].data;
-        data.typeOfLink = 'post';
-        return resolve(data);
-      }
-      else if (typeof response === 'object'){ //its a subreddit
-        data = response.data;
-        data.typeOfLink('subreddit');
-        return resolve(data);
-      }
-      else{
-        return reject("Response was not valid");
-      }
-    });
-  });
-}
 
 TrelloPowerUp.initialize({
   'card-buttons': (t, options) => {
@@ -70,6 +50,7 @@ TrelloPowerUp.initialize({
     return [];
   },
   
+  /*
   'attachment-thumbnail': (t, options) => {
     if (!isRedditLink(options.url)){
       throw t.NotHandled();
@@ -97,4 +78,5 @@ TrelloPowerUp.initialize({
       }
     });
   },
+  */
 });
