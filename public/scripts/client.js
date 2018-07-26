@@ -20,7 +20,10 @@ const getDataFromUrl = (t, url) => {
   $.getJSON(url, (response) => {
     console.log(response);
     if (Array.isArray(response)){
-      data = response.
+      let data = response[0].data.children[0].data;
+      console.log("title: " + data.title);
+      console.log("author: " + data.author);
+      return data;
     }
     else{
       throw new Error("Response was not an array");
@@ -46,13 +49,11 @@ TrelloPowerUp.initialize({
     if (!isRedditLink(options.url)){
       throw t.NotHandled();
     }
-    let data, redditTitle, imageUrl, dataUrl;
     
-    dataUrl = options.url + '.json';
+    let dataUrl = options.url + '.json';
     
     return Promise.try(() => {
-      data = getDataFromUrl(t, dataUrl);
-      return data;
+      return getDataFromUrl(t, dataUrl);
     })
     .then((data) => {
       redditTitle = data.title;
