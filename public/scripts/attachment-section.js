@@ -2,10 +2,11 @@
 
 const t = TrelloPowerUp.iframe();
 const Promise = TrelloPowerUp.Promise;
+const REDDIT_ICON = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745%2Freddit.png?1532644760400';
 const linkTemplate = 
 `
 <div class="link">
-  <div class="link-icon" background={{icon}}></div>
+  <div class="link-icon" background="{{icon}}"></div>
   <div class="link-details">
     <span class="link-details-title">{{title}}</div>
     <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
@@ -61,11 +62,14 @@ t.render(() => {
         };    
         if (data.typeOfLink === 'post'){
           renderData.subtitle = data.selftext.substring(0, 32);
-          if (data.thumbnail !== 'self')
-            renderData.icon = data.thumbnail
+          if (data.thumbnail ===)
+            renderData.icon = data.thumbnail;
+          else
+            renderData.icon = REDDIT_ICON;
         }
         else if (data.typeOfLink === 'subreddit'){
           renderData.subtitle = data.public_description.substring(0, 32);
+          renderData.icon = REDDIT_ICON;
         }
         else
           throw new Error('Type of link was not post or subreddit');

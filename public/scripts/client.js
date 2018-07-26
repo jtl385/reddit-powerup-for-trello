@@ -2,7 +2,7 @@
 
 const Promise = TrelloPowerUp.Promise;
 
-const REDDIT_ICON = 'https://png.icons8.com/metro/1600/reddit.png';
+const REDDIT_ICON = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745%2Freddit.png?1532644760400';
 
 const cardButtonCallback = (t) => {
   return t.popup({
