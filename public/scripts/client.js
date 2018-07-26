@@ -19,18 +19,19 @@ const isRedditLink = (url) => {
 const getDataFromUrl = (t, url) => {
   return new Promise((resolve, reject) => {
     $.getJSON(url, (response) => {
-      console.log(response);
+      let data;
       if (Array.isArray(response)){ //its a post
-        let data = response[0].data.children[0].data;
-        console.log("title: " + data.title);
-        console.log("author: " + data.author);
+        data = response[0].data;
+        data.typeOfLink = 'post';
         return resolve(data);
       }
       else if (typeof response === 'object'){ //its a subreddit
-        
+        data = response.data;
+        data.typeOfLink('subreddit');
+        return resolve(data);
       }
       else{
-        return reject("Response was not an array");
+        return reject("Response was not valid");
       }
     });
   });
@@ -78,17 +79,19 @@ TrelloPowerUp.initialize({
       return getDataFromUrl(t, dataUrl);
     })
     .then((data) => {
-      return {
-        url: options.url,
-        title: data.title,
-        image: {
-          url: data.thumbnail,
-          logo: false,
-        },
-        author: data.author,
-        selftext: data.selftext,
-        dist: data.dist,  
-      };
+      if (data.typeOfLink === 'post'){
+        return {
+          typeOfLink: 'post',
+          url: options.url,
+          title: data.title,
+          image: {
+            url: data.thumbnail,
+            logo: false,
+          },
+          author: data.author,
+          selftext: data.selftext,
+        };
+      }
     });
   },
 });
