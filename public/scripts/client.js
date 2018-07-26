@@ -56,15 +56,11 @@ TrelloPowerUp.initialize({
       return getDataFromUrl(t, dataUrl);
     })
     .then((data) => {
-      redditTitle = data.title;
-      imageUrl = data.thumbnail;
-    })
-    .then(() => {
       return {
         url: options.url,
-        title: redditTitle,
+        title: data.title,
         image: {
-          url: imageUrl,
+          url: data.thumbnail,
           logo: false,
         },
       };
