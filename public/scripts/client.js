@@ -90,6 +90,7 @@ TrelloPowerUp.initialize({
           },
           author: data.author,
           selftext: data.selftext,
+          data: data,
         };
       }
     });
