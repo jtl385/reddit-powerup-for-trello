@@ -22,18 +22,18 @@ const getDataFromUrl = (t, url) => {
   xhr.open('GET', url);
   xhr.responseType = 'json';
   xhr.onload = () => {
+    console.log("xhr response: " + xhr.response);
     if (Array.isArray(xhr.response)){
       try{ 
         data = xhr.response[0].data.children[0].data;
         return data;
-        }
+      }
       catch(err){
-        console.log("Error getting json data");
-        console.error(err);
+        throw new Error("Could not get data. Is the url a reddit post?");
       }
     }
     else {
-      console.log("Response was not an array");
+      throw new Error("Response was not an array")
     }
   };
   xhr.send()
@@ -61,7 +61,8 @@ TrelloPowerUp.initialize({
     dataUrl = options.url + '/.json';
     
     return Promise.try(() => {
-      return getDataFromUrl(dataUrl);
+      data = getDataFromUrl(dataUrl);
+      return data;
     })
     .then((data) => {
       redditTitle = data.title;
