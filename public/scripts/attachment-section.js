@@ -1,4 +1,4 @@
-/* global TrelloPowerUp */
+/* global TrelloPowerUp Mustache */
 
 const t = TrelloPowerUp.iframe();
 const linkTemplate = 
@@ -12,8 +12,9 @@ const linkTemplate =
 
 </div>
 
-
 `
+
+const contentDiv = $('#content');
 
 const isRedditLink = (url) => {
   let regex = /^(?:http(s)?:\/\/)?(www\.)?(reddit)+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
@@ -31,7 +32,7 @@ const getDataFromUrl = (t, url) => {
       }
       else if (typeof response === 'object'){ //it's a subreddit
         data = response.data;
-        data.typeOfLink('subreddit');
+        data.typeOfLink = 'subreddit';
         return resolve(data);
       }
       else{
@@ -46,13 +47,24 @@ t.render(() => {
     return isRedditLink(a.url);
   })
   .then((attachments) => {
+    
     attachments.forEach((a) => {
       let dataUrl = a.url + '.json';
       Promise.try(() => {
         return getDataFromUrl(dataUrl);
       })
       .then((data) => {
-        Mustache.render(
+        let renderData;
+        
+        renderData.title = data.title;
+        renderData.url = 'reddit.com' + data.permalink;
+        if (data.typeOfLink === 'post')
+          renderData.subtitle = '';
+        else if (data.typeOfLink === 'subreddit')
+          renderData.subtitle = '';
+        
+        let linkHTML = Mustache.render(linkTemplate, renderData);
+        contentDiv.append(linkHTML);
       })
     });
   })
