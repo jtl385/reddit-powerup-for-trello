@@ -17,7 +17,7 @@ const isRedditLink = (url) => {
 }
 
 const getDataFromUrl = (t, url) => {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     $.getJSON(url, (response) => {
       console.log(response);
       if (Array.isArray(response)){
@@ -33,7 +33,6 @@ const getDataFromUrl = (t, url) => {
   });
 }
 
-
 TrelloPowerUp.initialize({
   'card-buttons': (t, options) => {
     return [{
@@ -45,13 +44,20 @@ TrelloPowerUp.initialize({
   
   'attachment-sections': (t, options) => {
     var attachments = options.entries;
-    var redditAttachments = attachments.filter(function (a) {
+    var redditAttachments = attachments.filter((a) => {
       return isRedditLink(a.url);
     });
     
     if (redditAttachments.length > 0) {
       return [{
-        claimed: redditAttachments, 
+        claimed: redditAttachments,
+        id: 'Reddit',
+        title: 'Reddit',
+        icon: REDDIT_ICON,
+        content: {
+          type: 'iframe',
+          url: t.signUrl(),
+        },
         
       }];
     }
