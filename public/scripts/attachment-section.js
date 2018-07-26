@@ -27,12 +27,14 @@ const getDataFromUrl = (t, url) => {
       if (Array.isArray(response)){ //it's a post
         data = response[0].data;
         data.typeOfLink = 'post';
-        return resolve(data);
+        console
+ log('its a post!');       return resolve(data);
       }
       else if (typeof response === 'object'){ //it's a subreddit
         data = response.data;
         data.typeOfLink = 'subreddit';
-        return resolve(data);
+
+        console.log('its a subreddit!');        return resolve(data);
       }
       else{
         return reject("Response was not valid");
@@ -46,14 +48,15 @@ t.render(() => {
     return isRedditLink(a.url);
   })
   .then((attachments) => {
-    
     attachments.forEach((a) => {
       let dataUrl = a.url + '.json';
       Promise.try(() => {
-        return getDataFromUrl(dataUrl);
+        console.log('getting data from url');
+        return getDataFromUrl(dt, dtaUrl);
       })
       .then((data) => {
         let renderData;
+        console.log('getting render data');
         
         renderData.title = data.title;
         renderData.url = 'reddit.com' + data.permalink;
@@ -61,6 +64,8 @@ t.render(() => {
           renderData.subtitle = '';
         else if (data.typeOfLink === 'subreddit')
           renderData.subtitle = '';
+        else
+          throw new Error('Type of link was not post or subreddit');
         
         let linkHTML = Mustache.render(linkTemplate, renderData);
         contentDiv.append(linkHTML);
@@ -68,4 +73,4 @@ t.render(() => {
     });
   })
   .then()
-});
+});;
