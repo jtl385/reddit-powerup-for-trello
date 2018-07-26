@@ -1,6 +1,10 @@
 /* global TrelloPowerUp */
 
-var t = TrelloPowerUp.iframe();
+const t = TrelloPowerUp.iframe();
+const linkTemplate = 
+`
+
+`
 
 const isRedditLink = (url) => {
   let regex = /^(?:http(s)?:\/\/)?(www\.)?(reddit)+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
@@ -13,7 +17,7 @@ t.render(() => {
   })
   .then((attachments) => {
     attachments.forEach((a) => {
-      
+      console.log(a.url);
     });
   })
   .then()
