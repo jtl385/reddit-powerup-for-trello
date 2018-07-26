@@ -1,6 +1,7 @@
 /* global TrelloPowerUp Mustache */
 
 const t = TrelloPowerUp.iframe();
+const Promise = TrelloPowerUp.Promise;
 const linkTemplate = 
 `
 <div class="link">
@@ -9,9 +10,7 @@ const linkTemplate =
     <span class="link-details-title">{{title}}</div>
     <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
   </div>
-
 </div>
-
 `
 
 const contentDiv = $('#content');
