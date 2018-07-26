@@ -20,17 +20,22 @@ const isRedditLink = (url) => {
   return regex.test(url);
 }
 
-const getDataFromUrl = (t, url) => {
+const getDataFromUrl = (url) => {
   return new Promise((resolve, reject) => {
     $.getJSON(url, (response) => {
       let data;
       if (Array.isArray(response)){ //it's a post
         data = response[0].data;
-        data.typeOfLink = 'post';;       return resolve(data);
+        data.typeOfLink = 'post';
+        console.log('in getDataFromUrl');
+        console.log(data);
+        return resolve(data);
       }
       else if (typeof response === 'object'){ //it's a subreddit
         data = response.data;
         data.typeOfLink = 'subreddit';
+        console.log('in getDataFromUrl');
+        console.log(data);
         return resolve(data);
       }
       else{
@@ -48,18 +53,19 @@ t.render(() => {
     attachments.forEach((a) => {
       let dataUrl = a.url + '.json';
       Promise.try(() => {
-
-        return getDataFromUrl(t, dataUrl);      })
+        return getDataFromUrl(dataUrl);
+      })
       .then((data) => {
-        let renderDataa = {
-          title: data.title,
-          url: 'reddit.com' + data.permalink,
-        };        if (data.typeOfLink === 'post')
+        let renderData = {};    
+        if (data.typeOfLink === 'post')
+          data.children[0].
           renderData.subtitle = '';
         else if (data.typeOfLink === 'subreddit')
           renderData.subtitle = '';
         else
           throw new Error('Type of link was not post or subreddit');
+        
+        console.log(renderData);
         
         let linkHTML = Mustache.render(linkTemplate, renderData);
         contentDiv.append(linkHTML);
