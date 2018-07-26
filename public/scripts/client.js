@@ -20,11 +20,14 @@ const getDataFromUrl = (t, url) => {
   return new Promise((resolve, reject) => {
     $.getJSON(url, (response) => {
       console.log(response);
-      if (Array.isArray(response)){
+      if (Array.isArray(response)){ //its a post
         let data = response[0].data.children[0].data;
         console.log("title: " + data.title);
         console.log("author: " + data.author);
         return resolve(data);
+      }
+      else if (typeof response === 'object'){ //its a subreddit
+        
       }
       else{
         return reject("Response was not an array");
@@ -83,7 +86,8 @@ TrelloPowerUp.initialize({
           logo: false,
         },
         author: data.author,
-        
+        selftext: data.selftext,
+        dist: data.dist,  
       };
     });
   },
