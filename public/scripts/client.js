@@ -85,15 +85,15 @@ TrelloPowerUp.initialize({
         return {
           typeOfLink: 'post',
           url: options.url,
-          title: data.title,
-          image: {
-            url: data.thumbnail,
-            logo: false,
-          },
-          author: data.author,
-          selftext: data.selftext,
           data: data,
         };
+      }
+      else if (data.typeOfLink === 'subreddit'){
+        return {
+          typeOfLink: 'subreddit',
+          url: options.url,
+          data: data,
+        }
       }
     });
   },
