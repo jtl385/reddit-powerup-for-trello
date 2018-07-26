@@ -3,6 +3,14 @@
 const t = TrelloPowerUp.iframe();
 const linkTemplate = 
 `
+<div class="link">
+  <div class="link-icon"></div>
+  <div class="link-details">
+    <span class="link-details-title">{{t</div>
+  </div>
+
+</div>
+
 
 `
 
@@ -41,7 +49,10 @@ t.render(() => {
       let dataUrl = a.url + '.json';
       Promise.try(() => {
         return getDataFromUrl(dataUrl);
-      });
+      })
+      .then((data) => {
+        
+      })
     });
   })
   .then()
