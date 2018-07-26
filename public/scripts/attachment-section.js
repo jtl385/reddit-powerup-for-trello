@@ -8,5 +8,11 @@ const isRedditLink = (url) => {
 }
 
 t.render(() => {
-  t.card('attachments').get('atta
+  t.card('attachments').get('attachments').filter((a) => {
+    return isRedditLink(a.url);
+  })
+  .then((attachments) => {
+    
+  })
+  .then()
 });
