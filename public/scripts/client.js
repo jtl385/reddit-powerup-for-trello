@@ -17,32 +17,14 @@ const isRedditLink = (url) => {
 }
 
 const getDataFromUrl = (t, url) => {
-  var xhr = new XMLHttpRequest();
-  var data = {};
-  xhr.open('GET', url, true);
-  xhr.responseType = 'json';
-  xhr.onload = () => {
-    console.log("xhr response: " + xhr.response);
-    if (Array.isArray(xhr.response)){
-      try{ 
-        data = xhr.response[0].data.children[0].data;
-        return data;
-      }
-      catch(err){
-        throw new Error("Could not get data. Is the url a reddit post?");
-      }
-    }
-    else {
-      throw new Error("Response was not an array")
-    }
-  };
-  xhr.send()
-};
-
-const getDataFromUrl2 = (t, url) => {
   $.getJSON(url, (response) => {
-    console.log("response: " + response);
-    return response;
+    console.log(response);
+    if (Array.isArray(response)){
+      data = response.
+    }
+    else{
+      throw new Error("Response was not an array");
+    }
   });
 }
 
@@ -62,19 +44,16 @@ TrelloPowerUp.initialize({
   
   'attachment-thumbnail': (t, options) => {
     if (!isRedditLink(options.url)){
-      throw t.notHandled();
+      throw t.NotHandled();
     }
     let data, redditTitle, imageUrl, dataUrl;
     
     dataUrl = options.url + '.json';
-    console.log(dataUrl);
     
     return Promise.try(() => {
-      data = getDataFromUrl2(dataUrl);
+      data = getDataFromUrl(t, dataUrl);
       return data;
     })
-    ;}});
-/*
     .then((data) => {
       redditTitle = data.title;
       imageUrl = data.thumbnail;
@@ -90,6 +69,4 @@ TrelloPowerUp.initialize({
       };
     });
   },
-  
 });
-*/
