@@ -66,12 +66,15 @@ TrelloPowerUp.initialize({
     }
     let data, redditTitle, imageUrl, dataUrl;
     
-    dataUrl = options.url + '/.json';
+    dataUrl = options.url + '.json';
+    console.log(dataUrl);
     
     return Promise.try(() => {
       data = getDataFromUrl2(dataUrl);
       return data;
     })
+    ;}});
+/*
     .then((data) => {
       redditTitle = data.title;
       imageUrl = data.thumbnail;
@@ -89,3 +92,4 @@ TrelloPowerUp.initialize({
   },
   
 });
+*/
