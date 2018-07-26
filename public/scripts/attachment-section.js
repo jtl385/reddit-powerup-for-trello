@@ -26,15 +26,12 @@ const getDataFromUrl = (t, url) => {
       let data;
       if (Array.isArray(response)){ //it's a post
         data = response[0].data;
-        data.typeOfLink = 'post';
-        console
- log('its a post!');       return resolve(data);
+        data.typeOfLink = 'post';;       return resolve(data);
       }
       else if (typeof response === 'object'){ //it's a subreddit
         data = response.data;
         data.typeOfLink = 'subreddit';
-
-        console.log('its a subreddit!');        return resolve(data);
+        return resolve(data);
       }
       else{
         return reject("Response was not valid");
@@ -51,16 +48,13 @@ t.render(() => {
     attachments.forEach((a) => {
       let dataUrl = a.url + '.json';
       Promise.try(() => {
-        console.log('getting data from url');
-        return getDataFromUrl(dt, dtaUrl);
-      })
+
+        return getDataFromUrl(t, dataUrl);      })
       .then((data) => {
-        let renderData;
-        console.log('getting render data');
-        
-        renderData.title = data.title;
-        renderData.url = 'reddit.com' + data.permalink;
-        if (data.typeOfLink === 'post')
+        let renderDataa = {
+          title: data.title,
+          url: 'reddit.com' + data.permalink,
+        };        if (data.typeOfLink === 'post')
           renderData.subtitle = '';
         else if (data.typeOfLink === 'subreddit')
           renderData.subtitle = '';
