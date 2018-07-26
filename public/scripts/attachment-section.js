@@ -6,7 +6,8 @@ const linkTemplate =
 <div class="link">
   <div class="link-icon"></div>
   <div class="link-details">
-    <span class="link-details-title">{{t</div>
+    <span class="link-details-title">{{title}}</div>
+    <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
   </div>
 
 </div>
@@ -51,7 +52,7 @@ t.render(() => {
         return getDataFromUrl(dataUrl);
       })
       .then((data) => {
-        
+        Mustache.render(
       })
     });
   })
