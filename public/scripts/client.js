@@ -48,6 +48,13 @@ TrelloPowerUp.initialize({
     var redditAttachments = attachments.filter(function (a) {
       return isRedditLink(a.url);
     });
+    
+    if (redditAttachments.length > 0) {
+      return [{
+       claimed: redditAttachments, 
+      }];
+    }
+    return [];
   },
   
   'attachment-thumbnail': (t, options) => {
