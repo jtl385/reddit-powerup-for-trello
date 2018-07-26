@@ -3,6 +3,7 @@
 const t = TrelloPowerUp.iframe();
 const Promise = TrelloPowerUp.Promise;
 const REDDIT_ICON = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745%2Freddit.png?1532644760400';
+const REDDIT_ICON_COLOR = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745%2Fredditcolor.png?1532645528303';
 const linkTemplate = 
 `
 <div class="link">
@@ -62,14 +63,14 @@ t.render(() => {
         };    
         if (data.typeOfLink === 'post'){
           renderData.subtitle = data.selftext.substring(0, 32);
-          if (data.thumbnail ===)
-            renderData.icon = data.thumbnail;
+          if (data.thumbnail === 'self' || !data.thumbnail)
+            renderData.icon = REDDIT_ICON_COLOR;
           else
-            renderData.icon = REDDIT_ICON;
+            renderData.icon = data.thumbnail;
         }
         else if (data.typeOfLink === 'subreddit'){
           renderData.subtitle = data.public_description.substring(0, 32);
-          renderData.icon = REDDIT_ICON;
+          renderData.icon = REDDIT_ICON_COLOR;
         }
         else
           throw new Error('Type of link was not post or subreddit');
