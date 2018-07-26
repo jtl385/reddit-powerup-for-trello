@@ -51,7 +51,7 @@ t.render(() => {
   })
   .then((attachments) => {
     attachments.forEach((a) => {
-      let dataUrl = a.url + '.json';
+      let dataUrl = a.url + 'about.json';
       Promise.try(() => {
         return getDataFromUrl(dataUrl);
       })
