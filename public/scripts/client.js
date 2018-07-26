@@ -60,7 +60,9 @@ TrelloPowerUp.initialize({
         icon: REDDIT_ICON,
         content: {
           type: 'iframe',
-          url: t.signUrl(),
+          url: t.signUrl('./reddit-attachment-section.html', {
+            arg: {},
+          }),
         },
         
       }];
