@@ -12,7 +12,9 @@ t.render(() => {
     return isRedditLink(a.url);
   })
   .then((attachments) => {
-    
+    attachments.forEach((a) => {
+      
+    });
   })
   .then()
 });
