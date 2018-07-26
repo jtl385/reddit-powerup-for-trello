@@ -17,17 +17,19 @@ const isRedditLink = (url) => {
 }
 
 const getDataFromUrl = (t, url) => {
-  $.getJSON(url, (response) => {
-    console.log(response);
-    if (Array.isArray(response)){
-      let data = response[0].data.children[0].data;
-      console.log("title: " + data.title);
-      console.log("author: " + data.author);
-      return data;
-    }
-    else{
-      throw new Error("Response was not an array");
-    }
+  return new Promise(function(resolve, reject) {
+    $.getJSON(url, (response) => {
+      console.log(response);
+      if (Array.isArray(response)){
+        let data = response[0].data.children[0].data;
+        console.log("title: " + data.title);
+        console.log("author: " + data.author);
+        return resolve(data);
+      }
+      else{
+        return reject("Response was not an array");
+      }
+    });
   });
 }
 
@@ -42,7 +44,10 @@ TrelloPowerUp.initialize({
   },
   
   'attachment-sections': (t, options) => {
-    
+    var attachments = options.entries;
+    var redditAttachments = attachments.filter(function (a) {
+      return isRedditLink(a.url);
+    });
   },
   
   'attachment-thumbnail': (t, options) => {
