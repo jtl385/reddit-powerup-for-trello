@@ -63,6 +63,7 @@ t.render(() => {
   .then((attachments) => {
     Promise.map(attachments, (a) => {
       let dataUrl = a.url;
+      let i = dataUrl.indexOf('reddit');
       if (dataUrl.charAt(dataUrl.length - 1) !== '/')
         dataUrl += '/';
       dataUrl += 'about.json';

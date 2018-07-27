@@ -1,1 +1,11 @@
-body<
+p {
+  text-align: center;
+}
+
+div li{
+  text-align: left;
+}
+
+ul {
+  margin: 0px;
+}
