@@ -77,9 +77,7 @@ t.render(() => {
     })
     .then((datas) => {
       const links = datas.map((data) => {
-        let renderData = {
-          href: 
-        };
+        let renderData = {};
         
         if (data.typeOfLink === 'post'){
           renderData.title = data.title;
@@ -92,6 +90,8 @@ t.render(() => {
             renderData.icon = REDDIT_ICON_COLOR;
           else
             renderData.icon = data.thumbnail;
+          
+          renderData.href = 'https://www.reddit.com' + data.permalink;
         }
         else if (data.typeOfLink === 'subreddit'){
           renderData.title = 'reddit.com' + data.url;
@@ -101,6 +101,7 @@ t.render(() => {
             renderData.text += "...";
           
           renderData.icon = REDDIT_ICON_COLOR;
+          renderData.href = 'https://www.reddit.com' + data.url;
         }
         else {
           contentDiv.html('Error loading attachments! Make sure your reddit links are to posts or subreddits (not comments or image urls)');
