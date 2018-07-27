@@ -22,6 +22,7 @@ const linkTemplate =
 `
 
 const contentDiv = $('#content');
+const firstTime = true;
 
 const isRedditLink = (url) => {
   let regex = /^(?:http(s)?:\/\/)?(www\.)?(reddit)+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
@@ -50,18 +51,18 @@ const getDataFromUrl = (url) => {
 }
 
 t.render(() => {
+  if (firstTime)
+    contentDive
   t.card('attachments').get('attachments').filter((a) => {
     return isRedditLink(a.url);
   }) 
   .then((attachments) => {
-    //contentDiv.empty();
-    document.getElementById('content').innerHTML='';
-    let links = attachments.map((a) => {
+    Promise.map(attachments, (a) =>{
       let dataUrl = a.url + 'about.json';
-      Promise.try(() => {
-        return getDataFromUrl(dataUrl);
-      })
-      .then((data) => {
+      return getDataFromUrl(dataUrl);
+    })
+    .then((datas) => {
+      const links = datas.map((data) => {
         let renderData = {
           title: data.title,
         };
@@ -86,13 +87,10 @@ t.render(() => {
         else
           throw new Error('Type of link was not post or subreddit');
         
-        //contentDiv.append(Mustache.render(linkTemplate, renderData));
-        document.getElementById('content').innerHTML = Mustache.render(linkTemplate, renderData);
-        
-      })
+        return renderData;
+      });
+      document.getElementById('content').innerHTML = Mustache.render(linkTemplate, { links: links });
+      return t.sizeTo('#content');
     });
-  })
-  .then(() => {
-    return t.sizeTo('#content');
-  })
+  });
 });
