@@ -61,7 +61,9 @@ t.render(() => {
     return isRedditLink(a.url);
   }) 
   .then((attachments) => {
-    Promise.map(attachments, (a) =>{
+    Promise.map(attachments, (a) => {
+      let dataUrl = a.url;
+      if (dataUrl.
       let dataUrl = a.url + 'about.json';
       return getDataFromUrl(dataUrl);
     })
@@ -91,6 +93,7 @@ t.render(() => {
           renderData.icon = REDDIT_ICON_COLOR;
         }
         else
+          contentDiv.html('Error loading attachments! Make sure your reddit links are to posts or subreddits (not comments or image urls)');
           throw new Error('Type of link was not post or subreddit');
         
         return renderData;
