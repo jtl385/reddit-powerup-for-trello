@@ -6,14 +6,18 @@ const REDDIT_ICON = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745
 const REDDIT_ICON_COLOR = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745%2Freddit2.png?1532698004806';
 const linkTemplate = 
 `
-<div class="link">
-  <div class="link-icon">
-    <img src="{{icon}}"></img>
+<div>
+  {{#links}}
+  <div class="link">
+    <div class="link-icon">
+      <img src="{{icon}}"></img>
+    </div>
+    <div class="link-details">
+      <div class="link-details-title">{{title}}</div>
+      <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
+    </div>
   </div>
-  <div class="link-details">
-    <div class="link-details-title">{{title}}</div>
-    <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
-  </div>
+  {{/links}}
 </div>
 `
 
@@ -46,11 +50,12 @@ const getDataFromUrl = (url) => {
 }
 
 t.render(() => {
-  var linkHTMLs = [];
   t.card('attachments').get('attachments').filter((a) => {
     return isRedditLink(a.url);
   }) 
   .then((attachments) => {
+    //contentDiv.empty();
+    document.getElementById('content').innerHTML='';
     let links = attachments.map((a) => {
       let dataUrl = a.url + 'about.json';
       Promise.try(() => {
@@ -81,9 +86,8 @@ t.render(() => {
         else
           throw new Error('Type of link was not post or subreddit');
         
-        console.log(renderData);
-        
-        contentDiv.append(Mustache.render(linkTemplate, renderData));
+        //contentDiv.append(Mustache.render(linkTemplate, renderData));
+        document.getElementById('content').innerHTML = Mustache.render(linkTemplate, renderData);
         
       })
     });
