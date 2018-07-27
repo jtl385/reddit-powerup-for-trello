@@ -43,6 +43,7 @@ TrelloPowerUp.initialize({
           url: t.signUrl('./reddit-attachment-section.html', {
             arg: {},
           }),
+          height: 230,
         },
         
       }];

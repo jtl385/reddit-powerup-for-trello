@@ -46,9 +46,8 @@ const getDataFromUrl = (url) => {
 }
 
 t.render(() => {
-  contentDiv.empty();
+  var linkHTMLs = [];
   t.card('attachments').get('attachments').filter((a) => {
-    console.log(a.url + ": " + isRedditLink(a.url));
     return isRedditLink(a.url);
   }) 
   .then((attachments) => {
@@ -84,8 +83,8 @@ t.render(() => {
         
         console.log(renderData);
         
-        let linkHTML = Mustache.render(linkTemplate, renderData);
-        contentDiv.append(linkHTML);
+        contentDiv.append(Mustache.render(linkTemplate, renderData));
+        
       })
     });
   })
