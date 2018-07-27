@@ -14,7 +14,8 @@ const linkTemplate =
     </div>
     <div class="link-details">
       <div class="link-details-title">{{title}}</div>
-      <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
+      <div class="link-details-subtitle">{{subtitle}}</div>
+      <div class="link-details-text u-quiet">{{text}}</div>
     </div>
   </div>
   {{/links}}
@@ -65,14 +66,14 @@ t.render(() => {
     })
     .then((datas) => {
       const links = datas.map((data) => {
-        let renderData = {
-          title: data.title,
-        };
+        let renderData = {};
         
         if (data.typeOfLink === 'post'){
-          renderData.subtitle = data.selftext.substring(0,128);
+          renderData.title = data.title;
+          renderData.subtitle = data.subreddit_name_prefixed;
+          renderData.text= data.selftext.substring(0,128);
           if (data.selftext.length > 128)
-            renderData.subtitle += "...";
+            renderData.text += "...";
             
           if (data.thumbnail === 'self' || !data.thumbnail)
             renderData.icon = REDDIT_ICON_COLOR;
@@ -80,9 +81,11 @@ t.render(() => {
             renderData.icon = data.thumbnail;
         }
         else if (data.typeOfLink === 'subreddit'){
-          renderData.subtitle = data.public_description.substring(0, 128);
+          renderData.title = 'reddit.com' + data.url;
+          renderData.subtitle = data.title;
+          renderData.text = data.public_description.substring(0, 128);
           if (data.public_description.length > 128)
-            renderData.subtitle += "...";
+            renderData.text += "...";
           
           renderData.icon = REDDIT_ICON_COLOR;
         }
