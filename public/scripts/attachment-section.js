@@ -62,9 +62,13 @@ t.render(() => {
   }) 
   .then((attachments) => {
     Promise.map(attachments, (a) => {
-      let dataUrl = a.url;
-      if (dataUrl.
       let dataUrl = a.url + 'about.json';
+      console.log(dataUrl);
+      /*
+      if (dataUrl.charAt(dataUrl.length - 1) !== '/')
+        dataUrl += '/';
+      dataUrl += 'about.json';
+      */
       return getDataFromUrl(dataUrl);
     })
     .then((datas) => {
@@ -94,7 +98,7 @@ t.render(() => {
         }
         else
           contentDiv.html('Error loading attachments! Make sure your reddit links are to posts or subreddits (not comments or image urls)');
-          throw new Error('Type of link was not post or subreddit');
+          throw new Error('Type of link was not post or subreddit, it was a ' + data.typeOfLink);
         
         return renderData;
       });
