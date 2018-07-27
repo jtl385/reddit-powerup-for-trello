@@ -31,15 +31,11 @@ const getDataFromUrl = (url) => {
       if (Array.isArray(response)){ //it's a post
         data = response[0].data.children[0].data;
         data.typeOfLink = 'post';
-        console.log('in getDataFromUrl');
-        console.log(data);
         return resolve(data);
       }
       else if (typeof response === 'object'){ //it's a subreddit
         data = response.data;
         data.typeOfLink = 'subreddit';
-        console.log('in getDataFromUrl');
-        console.log(data);
         return resolve(data);
       }
       else{
@@ -50,10 +46,11 @@ const getDataFromUrl = (url) => {
 }
 
 t.render(() => {
+  contentDiv.empty();
   t.card('attachments').get('attachments').filter((a) => {
     console.log(a.url + ": " + isRedditLink(a.url));
     return isRedditLink(a.url);
-  }) /*
+  }) 
   .then((attachments) => {
     let links = attachments.map((a) => {
       let dataUrl = a.url + 'about.json';
@@ -91,43 +88,8 @@ t.render(() => {
         contentDiv.append(linkHTML);
       })
     });
-  }) */
-  .then((attachments) => {
-    return attachments.map((a) => {
-      let dataUrl = a.url + 'about.json';
-      return getDataFromUrl(dataUrl);
-    });
   })
-  .then((datas) => {
-    datas.forEach((data) => {
-      let renderData = {
-        title: data.title,
-      };
-
-      if (data.typeOfLink === 'post'){
-        renderData.subtitle = data.selftext.substring(0,128);
-        if (data.selftext.length > 128)
-          renderData.subtitle += "...";
-
-        if (data.thumbnail === 'self' || !data.thumbnail)
-          renderData.icon = REDDIT_ICON_COLOR;
-        else
-          renderData.icon = data.thumbnail;
-      }
-      else if (data.typeOfLink === 'subreddit'){
-        renderData.subtitle = data.public_description.substring(0, 128);
-        if (data.public_description.length > 128)
-          renderData.subtitle += "...";
-
-        renderData.icon = REDDIT_ICON_COLOR;
-      }
-      else
-        throw new Error('Type of link was not post or subreddit');
-
-      console.log(renderData);
-
-      let linkHTML = Mustache.render(linkTemplate, renderData);
-      contentDiv.append(linkHTML);
-    })
+  .then(() => {
+    return t.sizeTo('#content');
   })
 });
