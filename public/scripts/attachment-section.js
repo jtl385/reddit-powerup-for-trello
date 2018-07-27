@@ -8,6 +8,7 @@ const linkTemplate =
 `
 <div>
   {{#links}}
+  <a href='{{href}}'>
   <div class="link">
     <div class="link-icon">
       <img src="{{icon}}"></img>
@@ -18,6 +19,7 @@ const linkTemplate =
       <div class="link-details-text u-quiet">{{text}}</div>
     </div>
   </div>
+  <a/>
   {{/links}}
 </div>
 `
@@ -62,8 +64,12 @@ t.render(() => {
   }) 
   .then((attachments) => {
     Promise.map(attachments, (a) => {
-      let dataUrl = a.url;
-      let i = dataUrl.indexOf('reddit');
+      // getDataFromUrl works best if link is 'https://www...."
+      // if user puts in reddit.com or www.reddit.com, it won't work well
+      // so we want to always append 'https://www." before 'reddit.com'
+      let i = a.url.indexOf('reddit');
+      let dataUrl = "https://www.";
+      dataUrl += a.url.substr(i, a.url.length);
       if (dataUrl.charAt(dataUrl.length - 1) !== '/')
         dataUrl += '/';
       dataUrl += 'about.json';
@@ -71,12 +77,14 @@ t.render(() => {
     })
     .then((datas) => {
       const links = datas.map((data) => {
-        let renderData = {};
+        let renderData = {
+          href: 
+        };
         
         if (data.typeOfLink === 'post'){
           renderData.title = data.title;
           renderData.subtitle = data.subreddit_name_prefixed;
-          renderData.text= data.selftext.substring(0, maxTextLen);
+          renderData.text= data.selftext.substr(0, maxTextLen);
           if (data.selftext.length > maxTextLen)
             renderData.text += "...";
             
@@ -88,7 +96,7 @@ t.render(() => {
         else if (data.typeOfLink === 'subreddit'){
           renderData.title = 'reddit.com' + data.url;
           renderData.subtitle = data.title;
-          renderData.text = data.public_description.substring(0, maxTextLen);
+          renderData.text = data.public_description.substr(0, maxTextLen);
           if (data.public_description.length > maxTextLen)
             renderData.text += "...";
           
