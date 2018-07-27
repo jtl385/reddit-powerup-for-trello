@@ -76,23 +76,32 @@ t.render(() => {
       return getDataFromUrl(dataUrl);
     })
     .then((datas) => {
-      const links = datas.map((data) => {
+      const renderDatas = datas.map((data) => {
         let renderData = {};
+        // 4 parts of link: icon, title, subtitle, and text (see template)
+        // ICON: reddit icon, unless it is a post with an image url
+        // TITLE: for post, it's the post title. For sub, it's r/name_of_subreddit
+        // SUBTITLE: for post, its the subreddit the post is in. For sub, it's the title (what shows on the tab)
+        // TEXT: for self-post, its the post text. For a link post, it's the link. For subs, its the full sub description (usually the sidebar).
         
         if (data.typeOfLink === 'post'){
           renderData.title = data.title;
           renderData.subtitle = data.subreddit_name_prefixed;
             
           if (data.thumbnail === 'self' || !data.thumbnail){
+            renderData.icon = REDDIT_ICON_COLOR;
+          }
+          else{
+            renderData.icon = data.thumbnail;
+          }
+          if (data.selftext){
             renderData.text= data.selftext.substr(0, maxTextLen);
             if (data.selftext.length > maxTextLen){
               renderData.text += "...";
             }
-            renderData.icon = REDDIT_ICON_COLOR;
-            renderData.text = data.url;
           }
           else{
-            renderData.icon = data.thumbnail;
+            renderData.text = data.url;
           }
           
           renderData.href = 'https://www.reddit.com' + data.permalink;
@@ -114,7 +123,7 @@ t.render(() => {
         
         return renderData;
       });
-      contentDiv.html(Mustache.render(linkTemplate, { links: links }));
+      contentDiv.html(Mustache.render(linkTemplate, { links: renderDatas }));
       return t.sizeTo('#content');
     });
   });
