@@ -82,14 +82,18 @@ t.render(() => {
         if (data.typeOfLink === 'post'){
           renderData.title = data.title;
           renderData.subtitle = data.subreddit_name_prefixed;
-          renderData.text= data.selftext.substr(0, maxTextLen);
-          if (data.selftext.length > maxTextLen)
-            renderData.text += "...";
             
-          if (data.thumbnail === 'self' || !data.thumbnail)
+          if (data.thumbnail === 'self' || !data.thumbnail){
+            renderData.text= data.selftext.substr(0, maxTextLen);
+            if (data.selftext.length > maxTextLen){
+              renderData.text += "...";
+            }
             renderData.icon = REDDIT_ICON_COLOR;
-          else
+            renderData.text = data.url;
+          }
+          else{
             renderData.icon = data.thumbnail;
+          }
           
           renderData.href = 'https://www.reddit.com' + data.permalink;
         }
