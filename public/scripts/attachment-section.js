@@ -30,6 +30,7 @@ var firstTime = true;
 
 const isRedditLink = (url) => {
   let regex = /^(?:http(s)?:\/\/)?(www\.)?(reddit)+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
+  //regex is tweaked version of this: https://www.regextester.com/94502
   return regex.test(url);
 }
 
