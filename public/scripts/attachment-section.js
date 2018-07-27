@@ -3,7 +3,7 @@
 const t = TrelloPowerUp.iframe();
 const Promise = TrelloPowerUp.Promise;
 const REDDIT_ICON = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745%2Freddit.png?1532644760400';
-const REDDIT_ICON_COLOR = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745%2Fredditcolor.png?1532645528303';
+const REDDIT_ICON_COLOR = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e7d7745%2Freddit2.png?1532698004806';
 const linkTemplate = 
 `
 <div class="link">
@@ -51,10 +51,11 @@ const getDataFromUrl = (url) => {
 
 t.render(() => {
   t.card('attachments').get('attachments').filter((a) => {
+    console.log(a.url + ": " + isRedditLink(a.url));
     return isRedditLink(a.url);
-  })
+  }) /*
   .then((attachments) => {
-    attachments.forEach((a) => {
+    let links = attachments.map((a) => {
       let dataUrl = a.url + 'about.json';
       Promise.try(() => {
         return getDataFromUrl(dataUrl);
@@ -90,6 +91,10 @@ t.render(() => {
         contentDiv.append(linkHTML);
       })
     });
+  }) */
+  .then((attachments) => {
+    var datas = attachments.map((a) => {
+      return getDataFromUrl(
+    });
   })
-  .then()
 });
