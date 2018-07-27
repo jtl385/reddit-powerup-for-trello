@@ -22,7 +22,7 @@ const linkTemplate =
 `
 
 const contentDiv = $('#content');
-const firstTime = true;
+var firstTime = true;
 
 const isRedditLink = (url) => {
   let regex = /^(?:http(s)?:\/\/)?(www\.)?(reddit)+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm;
@@ -51,8 +51,10 @@ const getDataFromUrl = (url) => {
 }
 
 t.render(() => {
-  if (firstTime)
-    contentDive
+  if (firstTime){
+    contentDiv.html('LOADING...');
+    firstTime = false;
+  }
   t.card('attachments').get('attachments').filter((a) => {
     return isRedditLink(a.url);
   }) 
@@ -89,7 +91,7 @@ t.render(() => {
         
         return renderData;
       });
-      document.getElementById('content').innerHTML = Mustache.render(linkTemplate, { links: links });
+      contentDiv.html(Mustache.render(linkTemplate, { links: links }));
       return t.sizeTo('#content');
     });
   });

@@ -50,34 +50,4 @@ TrelloPowerUp.initialize({
     }
     return [];
   },
-  
-  /*
-  'attachment-thumbnail': (t, options) => {
-    if (!isRedditLink(options.url)){
-      throw t.NotHandled();
-    }
-    
-    let dataUrl = options.url + '.json';
-    
-    return Promise.try(() => {
-      return getDataFromUrl(t, dataUrl);
-    })
-    .then((data) => {
-      if (data.typeOfLink === 'post'){
-        return {
-          typeOfLink: 'post',
-          url: options.url,
-          data: data,
-        };
-      }
-      else if (data.typeOfLink === 'subreddit'){
-        return {
-          typeOfLink: 'subreddit',
-          url: options.url,
-          data: data,
-        }
-      }
-    });
-  },
-  */
 });
