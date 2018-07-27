@@ -33,6 +33,7 @@ TrelloPowerUp.initialize({
     });
     
     if (redditAttachments.length > 0) {
+      redditAttachments.reverse() //so it matches the order that the links show up in the iframe
       return [{
         claimed: redditAttachments,
         id: 'Reddit',

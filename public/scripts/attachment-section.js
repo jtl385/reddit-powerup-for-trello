@@ -23,6 +23,7 @@ const linkTemplate =
 `
 
 const contentDiv = $('#content');
+const maxTextLen = 150;
 var firstTime = true;
 
 const isRedditLink = (url) => {
@@ -71,8 +72,8 @@ t.render(() => {
         if (data.typeOfLink === 'post'){
           renderData.title = data.title;
           renderData.subtitle = data.subreddit_name_prefixed;
-          renderData.text= data.selftext.substring(0,128);
-          if (data.selftext.length > 128)
+          renderData.text= data.selftext.substring(0, maxTextLen);
+          if (data.selftext.length > maxTextLen)
             renderData.text += "...";
             
           if (data.thumbnail === 'self' || !data.thumbnail)
@@ -83,8 +84,8 @@ t.render(() => {
         else if (data.typeOfLink === 'subreddit'){
           renderData.title = 'reddit.com' + data.url;
           renderData.subtitle = data.title;
-          renderData.text = data.public_description.substring(0, 128);
-          if (data.public_description.length > 128)
+          renderData.text = data.public_description.substring(0, maxTextLen);
+          if (data.public_description.length > maxTextLen)
             renderData.text += "...";
           
           renderData.icon = REDDIT_ICON_COLOR;
