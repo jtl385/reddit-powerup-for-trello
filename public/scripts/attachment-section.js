@@ -7,7 +7,9 @@ const REDDIT_ICON_COLOR = 'https://cdn.glitch.com/ade37363-613c-451f-aedf-df761e
 const linkTemplate = 
 `
 <div class="link">
-  <div class="link-icon" background="{{icon}}"></div>
+  <div class="link-icon">
+    <img src="{{icon}}"></img>
+  </div>
   <div class="link-details">
     <div class="link-details-title">{{title}}</div>
     <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
@@ -63,13 +65,9 @@ t.render(() => {
         };
         
         if (data.typeOfLink === 'post'){
-          if (data.selftext.length > 128){
-            renderData.subtitle = data.selftext.substring(0, 128);
-            renderData += "...";
-          }
-          else{
-            
-          }
+          renderData.subtitle = data.selftext.substring(0,128);
+          if (data.selftext.length > 128)
+            renderData.subtitle += "...";
             
           if (data.thumbnail === 'self' || !data.thumbnail)
             renderData.icon = REDDIT_ICON_COLOR;
@@ -78,6 +76,9 @@ t.render(() => {
         }
         else if (data.typeOfLink === 'subreddit'){
           renderData.subtitle = data.public_description.substring(0, 128);
+          if (data.public_description.length > 128)
+            renderData.subtitle += "...";
+          
           renderData.icon = REDDIT_ICON_COLOR;
         }
         else
@@ -91,4 +92,4 @@ t.render(() => {
     });
   })
   .then()
-});;
+});
