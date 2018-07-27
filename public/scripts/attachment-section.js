@@ -25,7 +25,7 @@ const linkTemplate =
 `
 
 const contentDiv = $('#content');
-const maxTextLen = 150;
+const maxTextLen = 175;
 var firstTime = true;
 
 const isRedditLink = (url) => {
