@@ -9,7 +9,7 @@ const linkTemplate =
 <div class="link">
   <div class="link-icon" background="{{icon}}"></div>
   <div class="link-details">
-    <span class="link-details-title">{{title}}</div>
+    <div class="link-details-title">{{title}}</div>
     <div class="link-details-subtitle u-quiet">{{subtitle}}</div>
   </div>
 </div>
@@ -60,16 +60,24 @@ t.render(() => {
       .then((data) => {
         let renderData = {
           title: data.title,
-        };    
+        };
+        
         if (data.typeOfLink === 'post'){
-          renderData.subtitle = data.selftext.substring(0, 32);
+          if (data.selftext.length > 128){
+            renderData.subtitle = data.selftext.substring(0, 128);
+            renderData += "...";
+          }
+          else{
+            
+          }
+            
           if (data.thumbnail === 'self' || !data.thumbnail)
             renderData.icon = REDDIT_ICON_COLOR;
           else
             renderData.icon = data.thumbnail;
         }
         else if (data.typeOfLink === 'subreddit'){
-          renderData.subtitle = data.public_description.substring(0, 32);
+          renderData.subtitle = data.public_description.substring(0, 128);
           renderData.icon = REDDIT_ICON_COLOR;
         }
         else
