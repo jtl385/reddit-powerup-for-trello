@@ -2,10 +2,15 @@ p {
   text-align: center;
 }
 
-div li{
+div, li{
   text-align: left;
 }
 
 ul {
   margin: 0px;
+  padding-left: 18px;
+}
+
+li span{
+  left: -5px;
 }

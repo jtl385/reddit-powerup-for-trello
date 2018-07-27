@@ -124,7 +124,7 @@ t.render(() => {
         return renderData;
       });
       contentDiv.html(Mustache.render(linkTemplate, { links: renderDatas }));
-      return t.sizeTo('#content');
+      return t.sizeTo(Math.min(contentDiv.height(), 500));
     });
   });
 });
